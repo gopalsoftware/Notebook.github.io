@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Note</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+
+    }
+    .note-container {
+      padding: 20px;
+    }
+    .note-content {
+      font-size: 16px;
+    }    
+    .note-content b {
+      font-weight: bold;
+    }
+    .note-content i {
+      font-style: italic;
+    }
+    .note-content u {
+      text-decoration: underline;
+    }
+    .note-content [data-fontsize] {
+      font-size: var(--fontsize);
+    }
+  </style>
+</head>
+<body>
+     <input type="color" class="button" onchange="changePageBackgroundColor(event)" title="Page Background">
+  <div class="note-container">
+    <h1>Note Content</h1>
+    <div class="note-content" id="noteContent">on>"</button>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      var noteContent = localStorage.getItem('viewedNoteContent');
+      var noteContentElement = document.getElementById('noteContent');
+
+      if (noteContent) {
+        noteContentElement.innerHTML = noteContent;
+        processNoteContentStyles(noteContentElement);
+      } else {
+        noteContentElement.innerText = 'Note content not found.';
+      }
+    });
+
+    function processNoteContentStyles(noteContentElement) {
+      var elementsWithFontSize = noteContentElement.querySelectorAll('[data-fontsize]');
+      elementsWithFontSize.forEach(function(element) {
+        var fontSize = element.dataset.fontsize;
+        element.style.setProperty('--fontsize', fontSize);
+      });
+    }
+
+    function changePageBackgroundColor(event) {
+      var pageBackgroundColor = event.target.value;
+      document.body.style.backgroundColor = pageBackgroundColor;
+    }
+  </script>
+</body>
+</html>
